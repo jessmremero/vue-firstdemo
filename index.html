@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>vue项目</title>
+	<script type="text/javascript" src="./vue.js"></script>
+	<style>
+		button{width:100px;height:30px;}
+	</style>
+</head>
+<body>
+	<div :title="message" id="app"><!--挂载点-->
+	<p v-show="seen">你看得到我么？</p>
+	<button v-on:click="handleClick">切换</button>
+	<input v-model="content" type="text" /><!--更新-->
+	<p>{{content}}</p>
+	<input type="text" v-model="firstName" />
+	<input type="text" v-model="lastName" />
+	<div>{{fullName}}</div>
+	<p>{{count}}</p>
+	</div>
+</body>
+<script>
+	new Vue({//创建Vue实例
+	  el: '#app',
+	  data: {
+	    content: 'Hello Vue!',
+	    message:'我是挂载点',
+	    seen:true,
+	    firstName:'',
+	    lastName:'',
+	    count:0
+	  },
+	  methods:{
+	  	handleClick:function(){
+	  		this.content = 'hello world!'
+	  		this.seen = !this.seen
+	  	}
+	  },
+	  computed:{
+	  	fullName:function(){
+	  		return this.firstName+" "+this.lastName<!--如果二者都没变,会使用上一次的缓存值-->
+	  	}
+	  },
+	  watch:{<!--监听某一个数据的变化,只要有变化就执行-->
+	  	firstName:function(){
+	  		this.count++
+	  	}
+	  }
+   })
+</script>
+</html>
+<!--v-show与v-if区别，前者并不会移除DOM，而后者会移除DOM-->
